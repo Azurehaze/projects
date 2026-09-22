@@ -1,0 +1,67 @@
+from random import randint
+
+#off switch
+quit_program = "no"
+
+###   Which kinds of dice are allowed?
+
+die_types = {"d20":20, "D20":20,
+             "d4":4, "D4":4,
+             "d6":6, "D6":6,
+             "d8":8, "D8":8,
+             "D10":10, "d10":10,
+             "D12":12, "d12":12,
+             "D100":100, "d100":100
+             }
+
+###   Dice roller! roll(die type, how many, how many times?)
+###   use for any die roll.
+def roll(num_sides, num_dice, num_rolls):
+    final_result = []
+
+    for n in range(num_rolls):
+
+        result = 0
+
+        for die in range(int(num_dice)):
+            result += randint(1, int(num_sides))
+
+        final_result.append(result)
+    return final_result
+
+
+#Ask user for dice rolls
+while quit_program == "no":
+    die = input ("Which die would you like to roll? (type QUIT to quit) ", )
+
+    if die in ("QUIT", "quit"):
+        quit_program = "yes"
+
+    elif die in die_types:
+
+        # determines num_sides parameter of the roll function
+        number_of_dice = input("How many dice? ", )
+
+        ### determines num_rolls parameter of the roll function
+        ### advantage/disadvantage mechanic of D&D
+
+        advantage = input("Do you have advantage? ", )
+        if advantage in ("Yes", "yes", "YES", "y", "Y"):
+            number_of_rolls = 2
+
+        elif advantage in ("No", "no", "NO", "n", "N"):
+            number_of_rolls = 1
+        else:
+            print("Invalid input.")
+            continue
+
+        print(roll(die_types[die], number_of_dice, number_of_rolls))
+
+
+
+    else:
+        print("Sorry, I don't understand.")
+        print("Please enter die type in the format: 'd(number)'.")
+        print("You can choose any die in the official D&D format:")
+        print("d4, d6, d8, d10, d12, or d100.")
+        continue
